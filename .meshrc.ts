@@ -14,7 +14,7 @@ const config: Config = {
     },
   ],
   serve: {
-    browser: false,
+    browser: true,
     port: 3008
   },
   // additionalTypeDefs: ["./src/additional-typedefs/cdp.graphql"],

@@ -247,7 +247,7 @@ export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandl
   return createMeshHTTPHandler<TServerContext>({
     baseDir,
     getBuiltMesh: getBuiltMesh,
-    rawServeConfig: {"browser":false,"port":3008},
+    rawServeConfig: {"browser":true,"port":3008},
   })
 }
 
