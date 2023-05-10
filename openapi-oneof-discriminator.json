@@ -1,0 +1,163 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger Petstore",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "paths": {
+        "/pets/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pet found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pet"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dogs/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dog found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Dog"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cats/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cat found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cat"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Pet": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/Cat"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Dog"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "petType",
+                    "mapping": {
+                        "cat": "#/components/schemas/Cat",
+                        "dog": "#/components/schemas/Dog"
+                    }
+                }
+            },
+            "Cat": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Pet"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "color": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Dog": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Pet"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "age": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "requestBodies": {
+            "Pet": {
+                "required": true,
+                "content": {
+                    "application/vnd.api+json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "attributes": {
+                                            "$ref": "#/components/schemas/Pet"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
