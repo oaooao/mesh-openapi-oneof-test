@@ -52,7 +52,11 @@
                     "petType"
                 ],
                 "discriminator": {
-                    "propertyName": "petType"
+                    "propertyName": "petType",
+                    "mapping": {
+                        "Cat": "#/components/schemas/Cat",
+                        "Dog": "#/components/schemas/Dog"
+                    }
                 }
             },
             "Cat": {
