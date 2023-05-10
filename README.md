@@ -7,5 +7,5 @@ This is a test project to demonstrate the issue with oneOf in OpenAPI 3.0.2.
 1. Clone this repository
 2. Run `npm install`
 3. Run `npm run server:rest`
-4. Run `npm run dev`
+4. Run `npm run dev` in a new terminal tab
 5. Open http://localhost:3008/graphql in your browser
