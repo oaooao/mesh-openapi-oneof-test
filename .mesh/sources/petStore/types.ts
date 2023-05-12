@@ -22,6 +22,8 @@ export type Scalars = {
 
 export type Query = {
   pets_by_id?: Maybe<Pet>;
+  dogs_by_id?: Maybe<Dog>;
+  cats_by_id?: Maybe<Cat>;
 };
 
 
@@ -29,9 +31,31 @@ export type Querypets_by_idArgs = {
   id: Scalars['String'];
 };
 
+
+export type Querydogs_by_idArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Querycats_by_idArgs = {
+  id: Scalars['String'];
+};
+
 export type Pet = {
   name: Scalars['String'];
-  petType: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+};
+
+export type Dog = Pet & {
+  name: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+  dog_exclusive?: Maybe<Scalars['String']>;
+};
+
+export type Cat = Pet & {
+  name: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+  cat_exclusive?: Maybe<Scalars['String']>;
 };
 
 export type HTTPMethod =
@@ -47,7 +71,11 @@ export type HTTPMethod =
 
   export type QuerySdk = {
       /** undefined **/
-  pets_by_id: InContextSdkMethod<Query['pets_by_id'], Querypets_by_idArgs, MeshContext>
+  pets_by_id: InContextSdkMethod<Query['pets_by_id'], Querypets_by_idArgs, MeshContext>,
+  /** undefined **/
+  dogs_by_id: InContextSdkMethod<Query['dogs_by_id'], Querydogs_by_idArgs, MeshContext>,
+  /** undefined **/
+  cats_by_id: InContextSdkMethod<Query['cats_by_id'], Querycats_by_idArgs, MeshContext>
   };
 
   export type MutationSdk = {

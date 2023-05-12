@@ -10,11 +10,25 @@ directive @httpOperation(path: String, operationSpecificHeaders: ObjMap, httpMet
 
 type Query @globalOptions(sourceName: "petStore", endpoint: "http://localhost:3000/") {
   pets_by_id(id: String!): Pet @httpOperation(path: "/pets/{args.id}", operationSpecificHeaders: "{\"accept\":\"application/json\"}", httpMethod: GET)
+  dogs_by_id(id: String!): Dog @httpOperation(path: "/dogs/{args.id}", operationSpecificHeaders: "{\"accept\":\"application/json\"}", httpMethod: GET)
+  cats_by_id(id: String!): Cat @httpOperation(path: "/cats/{args.id}", operationSpecificHeaders: "{\"accept\":\"application/json\"}", httpMethod: GET)
 }
 
 interface Pet @discriminator(propertyName: "petType") {
   name: String!
-  petType: String!
+  petType: String
+}
+
+type Dog implements Pet {
+  name: String!
+  petType: String
+  dog_exclusive: String
+}
+
+type Cat implements Pet {
+  name: String!
+  petType: String
+  cat_exclusive: String
 }
 
 scalar ObjMap

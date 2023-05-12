@@ -29,6 +29,8 @@ export type Scalars = {
 
 export type Query = {
   pets_by_id?: Maybe<Pet>;
+  dogs_by_id?: Maybe<Dog>;
+  cats_by_id?: Maybe<Cat>;
 };
 
 
@@ -36,9 +38,31 @@ export type Querypets_by_idArgs = {
   id: Scalars['String'];
 };
 
+
+export type Querydogs_by_idArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Querycats_by_idArgs = {
+  id: Scalars['String'];
+};
+
 export type Pet = {
   name: Scalars['String'];
-  petType: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+};
+
+export type Dog = Pet & {
+  name: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+  dog_exclusive?: Maybe<Scalars['String']>;
+};
+
+export type Cat = Pet & {
+  name: Scalars['String'];
+  petType?: Maybe<Scalars['String']>;
+  cat_exclusive?: Maybe<Scalars['String']>;
 };
 
 export type HTTPMethod =
@@ -139,8 +163,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  Pet: never;
+  Pet: ResolversTypes['Dog'] | ResolversTypes['Cat'];
   String: ResolverTypeWrapper<Scalars['String']>;
+  Dog: ResolverTypeWrapper<Dog>;
+  Cat: ResolverTypeWrapper<Cat>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ObjMap: ResolverTypeWrapper<Scalars['ObjMap']>;
   HTTPMethod: HTTPMethod;
@@ -149,8 +175,10 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  Pet: never;
+  Pet: ResolversParentTypes['Dog'] | ResolversParentTypes['Cat'];
   String: Scalars['String'];
+  Dog: Dog;
+  Cat: Cat;
   Boolean: Scalars['Boolean'];
   ObjMap: Scalars['ObjMap'];
 }>;
@@ -186,12 +214,28 @@ export type httpOperationDirectiveResolver<Result, Parent, ContextType = MeshCon
 
 export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   pets_by_id?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<Querypets_by_idArgs, 'id'>>;
+  dogs_by_id?: Resolver<Maybe<ResolversTypes['Dog']>, ParentType, ContextType, RequireFields<Querydogs_by_idArgs, 'id'>>;
+  cats_by_id?: Resolver<Maybe<ResolversTypes['Cat']>, ParentType, ContextType, RequireFields<Querycats_by_idArgs, 'id'>>;
 }>;
 
 export type PetResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = ResolversObject<{
-  __resolveType: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Dog' | 'Cat', ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  petType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  petType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+}>;
+
+export type DogResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Dog'] = ResolversParentTypes['Dog']> = ResolversObject<{
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  petType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dog_exclusive?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CatResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Cat'] = ResolversParentTypes['Cat']> = ResolversObject<{
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  petType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cat_exclusive?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export interface ObjMapScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['ObjMap'], any> {
@@ -201,6 +245,8 @@ export interface ObjMapScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Pet?: PetResolvers<ContextType>;
+  Dog?: DogResolvers<ContextType>;
+  Cat?: CatResolvers<ContextType>;
   ObjMap?: GraphQLScalarType;
 }>;
 

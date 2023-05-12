@@ -1,18 +1,9 @@
 import express from "express";
 import { pets } from './data';
-import * as OpenApiValidator from 'express-openapi-validator';
 
 const app = express();
 
 app.use(express.json());
-
-app.use(
-  OpenApiValidator.middleware({
-    apiSpec: './openapi.json',
-    validateRequests: true, // (default)
-    validateResponses: true, // false by default
-  }),
-);
 
 app.get("/", (req: express.Request, res: express.Response) => {
   res.send("Hello World!");

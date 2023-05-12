@@ -6,20 +6,16 @@ const config: Config = {
       name: "petStore",
       handler: {
         openapi: {
-          source: "./openapi.json",
+          source: "./openapi.yaml",
           endpoint: "http://localhost:3000/",
         },
       },
-      // transforms: CDPTransforms as any,
     },
   ],
   serve: {
     browser: true,
     port: 3008
   },
-  // additionalTypeDefs: ["./src/additional-typedefs/cdp.graphql"],
-  // additionalResolvers: ["./src/additional-resolvers/cdp"],
-  // documents: ["./src/documents/**/*.graphql"],
 };
 
 export default config;
